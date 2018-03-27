@@ -8,7 +8,7 @@
  <h3> The app is deployed on AWS- <a href="http://18.218.235.45/">http://18.218.235.45/</a></h3>
 <h2>Important Files</h2>
 <ul>
- <li><b>app.py</b>-CustomerAI/venv/CustomerAI_Backend/app.py (Flask Server Instance)</li>
- <li><b>Dashboard_front.html</b> -CustomerAI/venv/CustomerAI_Backend/templates/Dashboard_front.html (Frontend)</li>
+ <li><a href="https://github.com/dhirajhr/CustomerAI/venv/CustomerAI_Backend/app.py"><b>app.py</b></a> -Flask Server Instance</li>
+ <li><a href="https://github.com/dhirajhr/CustomerAI/venv/CustomerAI_Backend/templates/Dashboard_front.html"><b>Dashboard_front.html</b></a> -Frontend</li>
 </ul>
 
