@@ -9,6 +9,6 @@
 <h2>Important Files</h2>
 <ul>
  <li><a href="https://github.com/dhirajhr/CustomerAI/blob/master/venv/CustomerAI_Backend/app.py"><b>app.py</b></a> -Flask Server Instance</li>
- <li><a href="https://github.com/dhirajhr/CustomerAI/blob/master/venv/CustomerAI_Backend/templates/Dashboard_front.html"><b>Dashboard_front.html</b></a> -Frontend</li>
+ <li><a href="https://github.com/dhirajhr/CustomerAI/blob/master/venv/CustomerAI_Backend/templates/Dashboard_Front.html"><b>Dashboard_front.html</b></a> -Frontend</li>
 </ul>
 
