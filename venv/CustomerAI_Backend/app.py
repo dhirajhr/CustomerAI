@@ -29,6 +29,7 @@ def my_form():
 
 @app.route("/",methods=['GET','POST'])
 def home():
+    print "received req"
     name = request.form['name']
     number = '+1'+request.form['number']
     type = request.form['type']
@@ -37,11 +38,14 @@ def home():
     pos = request.form['pos']
     neg = request.form['neg']
     processedText=processIt(name,type,intro)
+
     client.messages.create(
         to=number,
         from_='+13238864616',#(323) 886-4616
         body=processedText
     )
+    print "message sent"
+
     generics=mongo.db.generics
     temp=generics.find_one({'doc_id':'1'})
     if temp:
@@ -74,6 +78,7 @@ def add(number,type,name):
 
 @app.route("/sms", methods=['GET', 'POST'])
 def incoming_sms():
+    print "into /sms"
     """Send a dynamic reply to an incoming text message"""
     # Get the message the user sent our Twilio number
     body = request.values.get('Body', None)
@@ -127,5 +132,5 @@ def incoming_sms():
     return str(resp)
 
 if __name__ == "__main__":
-    app.run(debug = True)
+    app.run(debug=True,host='0.0.0.0',port=80)
 
