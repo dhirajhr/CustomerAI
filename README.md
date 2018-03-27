@@ -3,7 +3,7 @@
 <ul>
  <li>The Web Application sends a personalized message to the customer about the product sold.</li>
  <li>Upon analyzing Customer's reply using microsoft's Text Sentiment Analysis API; it sends a response back to the customer.</li>
- <li>As responses are received, the web app performs - ![#c5f015]Live Analysis `#c5f015` and displays a bar chart of product reviews. </li>
+ <li>As responses are received, the web app performs- <b><i>Live Analysis</i></b> and displays a bar chart of product reviews. </li>
  </ul>
  <h3> The app is deployed on AWS- <a href="http://18.218.235.45/">http://18.218.235.45/</a></h3>
 <h2>Important Files</h2>
