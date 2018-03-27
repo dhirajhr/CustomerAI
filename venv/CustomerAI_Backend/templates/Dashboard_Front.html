@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Customer Support</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+
+            <script type="text/javascript">
+
+ window.onload=function(){
+   $('#instructions').modal('show');
+    };
+
+       function analyzeUtil(){
+            input={"mydata":"a"};
+            var jqXHR = $.ajax({
+            type: "POST",
+            url: "http://127.0.0.1:5000/analysis",
+            async: false,
+            data: input
+        });
+        return jqXHR.responseText;
+    }
+    function analyze()
+    {
+
+        var pos=[];
+        var neg=[];
+        result=analyzeUtil();
+        var obj = JSON.parse(result);
+
+        for(var i=0;i<obj.length;i++)
+        {
+        pos.push(parseInt(obj[i].Pos));
+        neg.push(parseInt(obj[i].Neg));
+        }
+        var chart = new CanvasJS.Chart("chartContainer", {
+	exportEnabled: true,
+	animationEnabled: true,
+	title:{
+		text: "Comparison of Products"
+	},
+
+	axisX: {
+		title: "Products"
+	},
+	axisY: {
+		title: "Positive Reviews",
+		titleFontColor: "#4F81BC",
+		lineColor: "#4F81BC",
+		labelFontColor: "#4F81BC",
+		tickColor: "#4F81BC"
+	},
+	axisY2: {
+		title: "Negative Reviews",
+		titleFontColor: "#C0504E",
+		lineColor: "#C0504E",
+		labelFontColor: "#C0504E",
+		tickColor: "#C0504E"
+	},
+	toolTip: {
+		shared: true
+	},
+	legend: {
+		cursor: "pointer",
+		itemclick: toggleDataSeries
+	},
+	data: [{
+		type: "column",
+		showInLegend: true,
+		dataPoints: [
+			{ label: "Cherry",  y: pos[0] },
+			{ label: "Vanilla", y: pos[1] },
+			{ label: "Lime", y: pos[2] }
+		]
+	},
+	{
+		type: "column",
+		axisYType: "secondary",
+		showInLegend: true,
+		dataPoints: [
+			{ label: "Cherry", y: neg[0] },
+			{ label: "Vanilla", y: neg[1] },
+			{ label: "Lime", y: neg[2] }
+		]
+	}]
+});
+
+chart.render();
+
+function toggleDataSeries(e) {
+	if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+		e.dataSeries.visible = false;
+	} else {
+		e.dataSeries.visible = true;
+	}
+	e.chart.render();
+}
+
+    }
+    function redirect()
+    {
+    window.open('Visuals.html', "_blank");
+
+    }
+    function runPyScript(input){
+
+        var jqXHR = $.ajax({
+            type: "POST",
+            url: "http://127.0.0.1:5000/",
+            async: false,
+            data: input
+        });
+        return jqXHR.responseText;
+    }
+ var nameCheck=false;
+ var numCheck=false;
+function check(field) {
+if(field.value==="")
+  document.getElementById("error").innerText ="Field is empty";
+ else
+ {
+    document.getElementById("error").innerText="";
+    nameCheck=true;
+    }
+}
+function checkNum(field) {
+if(isNaN(field.value) || field.value.length!=10 )
+  document.getElementById("errorNum").innerText ="Invalid";
+ else{
+    document.getElementById("errorNum").innerText="";
+    numCheck=true;
+    }
+}
+    function myFunction(){
+    //alert(document.getElementById('rad').value);
+    if(numCheck && nameCheck  ){
+
+    document.getElementById("errorFinal").innerText="";
+        name = document.getElementById('name').value;
+type=document.querySelector('input[name="rad"]:checked').value;
+       //alert(type);
+        number = document.getElementById('number').value;
+        intro = document.getElementById('intro').innerHTML;
+        neg = document.getElementById('neg').innerHTML;
+        pos = document.getElementById('pos').innerHTML;
+        var JSONObj={"name":name,"type":type,"number":number,"intro":intro,"neg":neg,"pos":pos};
+        result = runPyScript(JSONObj);
+        //alert(result);
+        console.log('Got back ' + result);
+        }
+        else
+            document.getElementById("errorFinal").innerText="Incomplete";
+    }
+
+
+
+
+    </script>
+</head>
+<body ng-app="myApp" ng-controller="personCtrl">
+
+
+<div class="container-fluid h-100 "  >
+
+
+  <div class="row h-100" >
+
+    <div class="col-sm-4" style="background-color:lavender;height : 100vh;">
+<br/>
+<br/>
+  <h2>Customer Support</h2>
+
+    <div class="form-group">
+      <label for="email">Name:</label>
+      <input type="text" class="form-control" id="name" placeholder="Enter Name" name="name" onblur="check(this);" required>
+        <p id="error"></p>
+    </div>
+    <div class="form-group">
+      <label for="Number">Number:</label>
+      <input type="text" class="form-control" id="number" placeholder="Enter Number (Enter 10 digits)" onblur="checkNum(this);" name="number">
+        <p id="errorNum"></p>
+    </div>
+    <div class="radio">
+      <label class="radio-inline">
+      <input type="radio" name="rad" value="Cherry" id="rad" checked>Cherry
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="rad" id="rad1" value="Vanilla">Vanilla
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="rad" id="rad2" value="Lime">Lime
+    </label>
+    </div>
+        <br/>
+        <button onclick="myFunction()" class="btn btn-default" style="width:150px;">Send SMS</button>
+        <p id="errorFinal"></p>
+        <br/>
+        <button  onclick="analyze()" data-toggle="modal" data-target="#myModal" style="width:150px;" class="btn btn-default">Live Analysis</button>
+
+
+
+    </div>
+    <div class="col-sm-8" style="background-color:lavenderblush;height : 100vh;">
+    <div class="w3-container">
+        <br/>
+        <br/>
+  <h2>First Automated Message</h2>
+
+  <div class="w3-panel w3-card-4" style="background-color:lavender;">
+      <p name="intro" id="intro" contentEditable="true">&#60;firstName&#62;, I saw that your &#60;productType&#62; was delivered. How are you enjoying it so far?"</p>
+  </div>
+</div>
+<div class="w3-container">
+  <h2>Negative Response</h2>
+
+
+  <div class="w3-panel w3-card-4" style="background-color:lavender;">
+    <p id="neg"  name="negative" contentEditable="true">So, What do you dislike about &#60;productType&#62;?</p>
+  </div>
+</div>
+<div class="w3-container">
+  <h2>Positive Response</h2>
+
+
+  <div class="w3-panel w3-card-4" style="background-color:lavender;">
+    <p id="pos" name="positive" contentEditable="true">What do you like the most about  &#60;productType&#62;?</p>
+  </div>
+</div>
+    </div>
+  </div>
+</div>
+<!--Modal-->
+<div class="container">
+  <!-- Trigger the modal with a button -->
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Analysis</h4>
+        </div>
+        <div class="modal-body">
+         <div id="chartContainer" style="height: 400px; width: 100%;"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!--Modal-->
+<!--introduction Modal-->
+<div id="instructions" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Instructions</h4>
+      </div>
+      <div class="modal-body">
+        <ul>
+            <li>I tried keeping it as minimal as possible!</li>
+          <li>The text present on the right side is editable. Just click on the cards.</li>
+          <li>Live Analysis displays Product vs Reviews plot.</li>
+          <li>As far as Phone number is concerned, write it without code. Just 10 digits.</li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- introduction Modal-->
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+
+</body>
+</html>

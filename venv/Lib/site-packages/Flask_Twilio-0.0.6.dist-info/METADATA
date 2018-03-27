@@ -1,0 +1,35 @@
+Metadata-Version: 2.0
+Name: Flask-Twilio
+Version: 0.0.6
+Summary: Make Twilio voice/SMS calls with Flask
+Home-page: https://github.com/lpsinger/flask-twilio
+Author: Leo Singer
+Author-email: leo.singer@ligo.org
+License: BSD
+Description-Content-Type: UNKNOWN
+Platform: any
+Classifier: Environment :: Web Environment
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Operating System :: OS Independent
+Classifier: Development Status :: 2 - Pre-Alpha
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Topic :: Internet :: WWW/HTTP :: Dynamic Content
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: Communications :: Telephony
+Requires-Dist: itsdangerous
+Requires-Dist: flask (>=0.9)
+Requires-Dist: six
+Requires-Dist: twilio (>=6.0.0)
+
+
+Flask-Twilio
+-------------
+
+Make Twilio voice/SMS calls with Flask
+
+
